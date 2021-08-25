@@ -109,7 +109,7 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 	bookIndex -= 1
 
 	bookTemplate, err := template.ParseFiles("views/books/show.html")
-	if err != nil || isOutOfRange(bookIndex) {
+	if err != nil || isOutOfBookRange(bookIndex) {
 		http.ServeFile(w, r, "public/500.html")
 		return
 	}
@@ -118,6 +118,10 @@ func BooksHandler(w http.ResponseWriter, r *http.Request) {
 
 func isOutOfRange(index int64) bool {
 	return (index < 0 || index >= int64(len(menus)))
+}
+
+func isOutOfBookRange(index int64) bool {
+	return (index < 0 || index >= int64(len(books)))
 }
 
 func main() {
